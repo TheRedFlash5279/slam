@@ -79,18 +79,6 @@ c c c c c c f c c c c c d c c c
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
 `
 }
-function Move () {
-    pause(100)
-    for (let index = 0; index < 1; index++) {
-        Boss.setVelocity(-50, 0)
-    }
-}
-function Move_Back () {
-    pause(100)
-    for (let index = 0; index < 2; index++) {
-        Boss.setVelocity(50, 0)
-    }
-}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     MC.setVelocity(-50, 0)
     pause(200)
@@ -100,6 +88,12 @@ sprites.onOverlap(SpriteKind.Player1, SpriteKind.Player, function (sprite, other
     info.changeLifeBy(-1)
     pause(500)
 })
+function Move_Back () {
+    pause(100)
+    for (let index = 0; index < 2; index++) {
+        Boss.setVelocity(50, 0)
+    }
+}
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
     projectile.destroy(effects.fire, 200)
     info.changeScoreBy(-5)
@@ -427,6 +421,12 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     pause(200)
     MC.setVelocity(0, 20)
 })
+function Move () {
+    pause(100)
+    for (let index = 0; index < 1; index++) {
+        Boss.setVelocity(-50, 0)
+    }
+}
 info.onLifeZero(function () {
     game.over(false)
 })
