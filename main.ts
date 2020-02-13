@@ -79,6 +79,18 @@ c c c c c c f c c c c c d c c c
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
 `
 }
+function Move () {
+    pause(100)
+    for (let index = 0; index < 1; index++) {
+        Boss.setVelocity(-50, 0)
+    }
+}
+function Move_Back () {
+    pause(100)
+    for (let index = 0; index < 2; index++) {
+        Boss.setVelocity(50, 0)
+    }
+}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     MC.setVelocity(-50, 0)
     pause(200)
@@ -91,6 +103,9 @@ sprites.onOverlap(SpriteKind.Player1, SpriteKind.Player, function (sprite, other
 sprites.onOverlap(SpriteKind.Enemy, SpriteKind.Projectile, function (sprite, otherSprite) {
     projectile.destroy(effects.fire, 200)
     info.changeScoreBy(-5)
+})
+info.player2.onLifeZero(function () {
+    game.over(true)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     projectile = sprites.createProjectileFromSprite(img`
@@ -412,6 +427,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     pause(200)
     MC.setVelocity(0, 20)
 })
+info.onLifeZero(function () {
+    game.over(false)
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
     if (projectile.overlapsWith(Boss)) {
         info.player2.changeLifeBy(-1)
@@ -646,17 +664,12 @@ tiles.setTilemap(tiles.createTilemap(
         ))
 scene.setBackgroundColor(8)
 MC.setPosition(29, 112)
-Boss.setPosition(149, 111)
+Boss.setPosition(145, 115)
 MC.setVelocity(0, 60)
 Boss.setVelocity(0, 60)
-info.player2.setLife(3)
-info.setLife(3)
+info.player2.setLife(10)
+info.setLife(10)
 Boss.setFlag(SpriteFlag.StayInScreen, true)
-game.onUpdateInterval(200, function () {
-    Boss.setVelocity(-50, 0)
-    pause(200)
-    Boss.setVelocity(50, 0)
-})
 game.onUpdateInterval(500, function () {
     if (info.score() < 0) {
         game.over(true)
@@ -1484,5 +1497,16 @@ f . . . . . . . . . . . . . . . . . . .
         100,
         false
         )
+    }
+})
+game.onUpdateInterval(500, function () {
+    if (Math.randomRange(0, 10) == 5) {
+        Move()
+    }
+    if (Math.randomRange(0, 10) == 7) {
+        Move_Back()
+    }
+    if (Math.randomRange(0, 10) == 3) {
+        Move_Back()
     }
 })
